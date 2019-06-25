@@ -38,34 +38,11 @@ class App extends Component {
 
     this.state = {
       friends: [],
-      friend: "",
       email: "",
       age: "",
       name: ""
     }
   }
-  changeHandler = (e) => {
-
-    this.setState({ [e.target.name]: e.target.value })
-
-  }
-  addfriend = (e) => {
-    e.preventDefault();
-    const newFriend = {
-      names: this.state.name,
-      ages: this.state.age,
-      emails: this.state.email
-    }
-    axios.post('http://localhost:5000/friends', newFriend)
-      .then(response => {
-        console.log(response);
-
-      })
-      .catch(err => console.log('error', err));
-
-
-  }
-
 
   componentDidMount() {
     axios
@@ -75,8 +52,32 @@ class App extends Component {
       })
       .catch(err => {
         console.log('Error', err);
-      })
 
+      },() => console.log('JB Vapes to much'))
+     
+ }
+
+
+  changeHandler = (e) => {
+
+    this.setState({ [e.target.name]: e.target.value })
+
+  }
+  addfriend = (e) => {
+    e.preventDefault();
+    const newFriend = {
+      name: this.state.name,
+      age: this.state.age,
+      email: this.state.email
+      }
+    axios.post('http://localhost:5000/friends', newFriend)
+      .then(response => {
+        console.log(response);
+        this.setState({ friends: response.data, name:'',age:'', email:''})
+        
+
+      })
+      .catch(err => console.log('error', err));
 
 
   }
@@ -102,7 +103,7 @@ class App extends Component {
           }} />
            <Route exact path="/friendsAdd" render={() => {
                     return (
-                      <AddFriend names={this.state.friend}  ages={this.state.age} emails={this.state.email} changeHandler={this.state.changeHandler} addfriend={this.state.addfriend}/>
+                      <AddFriend name={this.state.name}  age={this.state.age} email={this.state.email} changeHandler={this.changeHandler} addfriend={this.addfriend}/>
                     )
                 }} />
         
