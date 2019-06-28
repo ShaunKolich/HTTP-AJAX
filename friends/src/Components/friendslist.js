@@ -22,10 +22,9 @@ function FriendsList(props) {
                     <span>{friend.name}</span>
                     <span>{friend.email}</span>
 
-
-                    <button onClick={() => {
-                        props.history.push('/edit')
-                    }}>Edit</button>
+                    <Link to={`/edit/${friend.id}`}>          <button>
+                        Edit</button>
+                    </Link>
 
 
                     <button onClick={() => {
@@ -36,11 +35,7 @@ function FriendsList(props) {
 
             )}
 
-            <Route exact path='/edit' render={(props) => {
-                return (
-                    <Edit {...props}  />
-                )
-            }} />
+
         </div>
 
     )

@@ -66,27 +66,19 @@ class App extends Component {
     // e.preventDefault();
     axios.delete(`http://localhost:5000/friends/${id}`)
       .then(response => {
-        this.setState({friends:response.data})
-         
-       
-        
-    })
-    .catch (error => {
-      console.log(error);
-    })
+        this.setState({ friends: response.data })
+
+
+
+      })
+      .catch(error => {
+        console.log(error);
+      })
 
 
 
   }
 
-  editHandler = (e) => {
-
-  }
-
-  updateFriend = (e) => {
-
-
-  }
 
   changeHandler = (e) => {
 
@@ -112,6 +104,11 @@ class App extends Component {
 
   }
 
+  updateState = (friends) => {
+    this.setState({ friends })
+
+  }
+
   render() {
     return (
 
@@ -126,11 +123,11 @@ class App extends Component {
         </NavContainer>
         <FriendsListContainer>
 
-          <Route path="/" render={(props) => {
+          <Route exact path="/" render={(props) => {
             return (
 
               <FriendsList>
-                <Friendslist {...props} friends={this.state.friends} deleteHandler={this.deleteHandler}/>
+                <Friendslist {...props} friends={this.state.friends} deleteHandler={this.deleteHandler} />
               </FriendsList>
 
             )
@@ -140,11 +137,11 @@ class App extends Component {
               <AddFriend {...props} name={this.state.name} age={this.state.age} email={this.state.email} changeHandler={this.changeHandler} addfriend={this.addfriend} />
             )
           }} />
-          {/* <Route path= '/edit' render={(props) => {
+          <Route exact path='/edit/:id' render={(props) => {
             return (
-              <Edit {...props} name={this.state.name} age={this.state.age} email={this.state.email} editHandler={this.editHandler} updateFriend={this.updateFriend} />
+              <Edit {...props} updateState={this.updateState} />
             )
-          }} /> */}
+          }} />
         </FriendsListContainer>
 
 

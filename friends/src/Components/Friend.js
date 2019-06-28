@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-
+import Edit from '...'
 
 
 
@@ -16,7 +16,7 @@ class Friend extends Component {
 
         return (
             <div>
-                <p>WOW LOOK AT ME!</p>
+                
             </div>
         )
 
