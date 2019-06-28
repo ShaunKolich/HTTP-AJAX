@@ -2,9 +2,10 @@ import axios from 'axios';
 import './App.css';
 import Friendslist from '../src/Components/friendslist';
 import styled from 'styled-components';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import React, { Component } from 'react';
 import AddFriend from '../src/Components/addfriend';
+import Edit from '../src/Components/edit'
 
 const TopNav = styled.div`
       width:100%;
@@ -31,6 +32,10 @@ const FriendsListContainer = styled.div`
 
 `;
 
+const FriendsList = styled.div`
+margin-left:10px;
+
+`;
 
 class App extends Component {
   constructor(props) {
@@ -53,10 +58,35 @@ class App extends Component {
       .catch(err => {
         console.log('Error', err);
 
-      },() => console.log('JB Vapes to much'))
-     
- }
+      }, () => console.log('JB Vapes to much'))
 
+  }
+
+  deleteHandler = (id) => {
+    // e.preventDefault();
+    axios.delete(`http://localhost:5000/friends/${id}`)
+      .then(response => {
+        this.setState({friends:response.data})
+         
+       
+        
+    })
+    .catch (error => {
+      console.log(error);
+    })
+
+
+
+  }
+
+  editHandler = (e) => {
+
+  }
+
+  updateFriend = (e) => {
+
+
+  }
 
   changeHandler = (e) => {
 
@@ -69,12 +99,12 @@ class App extends Component {
       name: this.state.name,
       age: this.state.age,
       email: this.state.email
-      }
+    }
     axios.post('http://localhost:5000/friends', newFriend)
       .then(response => {
         console.log(response);
-        this.setState({ friends: response.data, name:'',age:'', email:''})
-        
+        this.setState({ friends: response.data, name: '', age: '', email: '' })
+
 
       })
       .catch(err => console.log('error', err));
@@ -84,30 +114,34 @@ class App extends Component {
 
   render() {
     return (
-    
+
       <TopNav>
         <NavContainer>
           <nav>
             <Link to="/" className='NavLink'>Home</Link>
             <Link to="/friendsAdd" className='NavLink'>Add Friend</Link>
-            {/* <Link to="/deleteFriend" className='NavLink'>Delete Friend</Link> */}
+            {/* <Link to="/Edit" className='NavLink'>Edit Friend</Link> */}
           </nav>
 
         </NavContainer>
         <FriendsListContainer>
-       
-          <Route exact path="/" render={() => {
+
+          <Route exact path="/" render={(props) => {
             return (
-              <Friendslist friends = {this.state.friends} />
+
+              <FriendsList>
+                <Friendslist {...props} friends={this.state.friends} deleteHandler={this.deleteHandler}/>
+              </FriendsList>
+
             )
           }} />
-           <Route exact path="/friendsAdd" render={() => {
-                    return (
-                      <AddFriend name={this.state.name}  age={this.state.age} email={this.state.email} changeHandler={this.changeHandler} addfriend={this.addfriend}/>
-                    )
-                }} />
-        
-        
+          <Route exact path="/friendsAdd" render={(props) => {
+            return (
+              <AddFriend {...props} name={this.state.name} age={this.state.age} email={this.state.email} changeHandler={this.changeHandler} addfriend={this.addfriend} />
+            )
+          }} />
+       
+
         </FriendsListContainer>
 
 
@@ -117,7 +151,7 @@ class App extends Component {
     )
 
 
-  
+
   }
 }
 export default App;
