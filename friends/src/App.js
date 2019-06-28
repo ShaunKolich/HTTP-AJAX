@@ -126,7 +126,7 @@ class App extends Component {
         </NavContainer>
         <FriendsListContainer>
 
-          <Route exact path="/" render={(props) => {
+          <Route path="/" render={(props) => {
             return (
 
               <FriendsList>
@@ -140,8 +140,11 @@ class App extends Component {
               <AddFriend {...props} name={this.state.name} age={this.state.age} email={this.state.email} changeHandler={this.changeHandler} addfriend={this.addfriend} />
             )
           }} />
-       
-
+          {/* <Route path= '/edit' render={(props) => {
+            return (
+              <Edit {...props} name={this.state.name} age={this.state.age} email={this.state.email} editHandler={this.editHandler} updateFriend={this.updateFriend} />
+            )
+          }} /> */}
         </FriendsListContainer>
 
 
